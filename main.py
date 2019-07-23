@@ -2,6 +2,7 @@ import webapp2
 import os
 import jinja2
 import random
+import boredless_models import URL_lib, Visit, History
 
 jinja_current_directory = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),
