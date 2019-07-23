@@ -9,5 +9,5 @@ class Visit(ndb.Model):
     comment = ndb.StringProperty(required=False)
     date_time = ndb.DateTimeProperty(required=True)
 
-class History(ndb.model):
+class History(ndb.Model):
     user_visit = ndb.KeyProperty(Visit, repeated=True)  # contains multiple
