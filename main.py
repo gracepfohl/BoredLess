@@ -9,11 +9,11 @@ jinja_current_directory = jinja2.Environment(
     extensions=['jinja2.ext.autoescape'],
     autoescape=True)
 
-class SampleHandler(webapp2.RequestHandler):
+class IndexHandler(webapp2.RequestHandler):
     def get(self):
-        start_template=jinja_current_directory.get_template("templates/sample.html")
+        start_template=jinja_current_directory.get_template("templates/index.html")
         self.response.write(start_template.render())
 
 app = webapp2.WSGIApplication([
-    ('/', sampleHandler)
+    ('/', IndexHandler)
 ], debug=True)
