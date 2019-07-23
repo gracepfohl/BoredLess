@@ -1,0 +1,58 @@
+
+@keyframes bgcolor {
+    0% {
+        background-color: #45a3e5
+    }
+
+    30% {
+        background-color: #66bf39
+    }
+
+    60% {
+        background-color: #eb670f
+    }
+
+    90% {
+        background-color: #f35
+    }
+
+    100% {
+        background-color: #864cbf
+    }
+}
+
+body {
+    -webkit-animation: bgcolor 20s infinite;
+    animation: bgcolor 10s infinite;
+    -webkit-animation-direction: alternate;
+    animation-direction: alternate;
+      font-family: "Comic Sans MS", cursive, sans-serif;
+}
+
+
+h1 {
+  color: white;
+  display: inline-block;
+}
+
+img{
+  display: inline-block;
+}
+
+
+.main{
+  border: solid white 2px;
+  padding: 10px;
+}
+
+#star-img{
+    display: inline-block;
+    width: 50%;
+}
+
+#fortune{
+  font-size: 14px;
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  text-align: center;
+}
