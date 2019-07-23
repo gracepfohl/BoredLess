@@ -20,7 +20,7 @@ class HomeHandler(webapp2.RequestHandler):
         start_template=jinja_current_directory.get_template("templates/home.html")
         self.response.write(start_template.render())
         def post(self):
-            pass
+            pass # add a post message here
 class ThanksHandler(webapp2.RequestHandler):
     def get(self):
         entered_url = self.request.get("entered_url")
