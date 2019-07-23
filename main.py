@@ -3,6 +3,7 @@ import os
 import jinja2
 import random
 from boredless_models import URL_lib, Visit, History
+from seed_data import seed_webs
 
 jinja_current_directory = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),
@@ -32,10 +33,15 @@ class ThanksHandler(webapp2.RequestHandler):
                                       url = entered_url)
         new_URL_lib_entity.put()
         self.response.write(start_template.render())
+class SeedHandler(webapp2.RequestHandler):
+    def get(self):
+        seed_webs()
+
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
     ('/home', HomeHandler),
-    ('/thanks', ThanksHandler)
+    ('/thanks', ThanksHandler),
+    ('/seed', SeedHandler)
 ], debug=True)
 
 #

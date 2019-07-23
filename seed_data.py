@@ -2,7 +2,7 @@ from boredless_models import URL_lib, Visit, History
 
 
 
-def seed_data():
+def seed_webs():
     weird1 = URL_lib(feeling="weird", url="http://ninjaflex.com/")
     intuitive1 = URL_lib(feeling="intuitive", url="http://www.puzzles.com/")
     social1 = URL_lib(feeling="social", url="http://www.puzzlesite.nl/index_us.html")
