@@ -15,7 +15,7 @@
 -->
 <html>
  <head>
-   <link rel="stylesheet" type="text/css" href="/styles/styles.css">
+   <link rel="stylesheet" type="text/css" href="../styles/styles.css">
  </head>
  <body>
      <div class="pagetitle">
@@ -23,32 +23,23 @@
      </div>
      <div class="main">
      </div>
-     <form method="post" action="/new-student">
+
+     <h1>Add Data to the website</h1>
+     <form method="post" action="/">
        First name:<br>
-       <input type="text" name="first-name" value="First Name">
+
        <br>
-       Last name:<br>
-       <input type="text" name="last-name" value="Last Name">
-       <br>
-       Student ID:<br>
-       <input type="text" name="student-id" value="Student ID">
-       <br>
-       <label for="user_meme_sign">Your Sign:</label>
-       <select name="user_meme_sign">
-         <option value="Aquarius">Aquarius</option>
-         <option value="Pisces">Pisces</option>
-         <option value="Aires">Aires</option>
-         <option value="Taurus">Taurus</option>
-         <option value="Gemini">Gemini</option>
-         <option value="Cancer">Cancer</option>
-         <option value="Leo">Leo</option>
-         <option value="Virgo">Virgo</option>
-         <option value="Libra">Libra</option>
-         <option value="Scorpio">Scorpio</option>
-         <option value="Sagittarius">Sagittarius</option>
-         <option value="Capricorn">Capricorn</option>
-       </select>
-       <input type="submit" value="Next MEME">
+       <h3>Select a feeling: </h3>
+        <select>
+          <option value="Weird">Weird</option>
+          <option value="Social">Social</option>
+          <option value="Creative">Creative</option>
+          <option value="Intuitive">Intuitive</option>
+
+        </select>
+        <input type="text" name="entered_url" value="Entered URL">
+
+       <input type="submit" value="Submit">
      </form>
  </body>
 </html>
