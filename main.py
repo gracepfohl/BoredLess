@@ -4,6 +4,7 @@ import jinja2
 import random
 from boredless_models import URL_lib, Visit, History
 from seed_data import seed_webs
+from google.appengine.ext import ndb
 
 jinja_current_directory = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),
@@ -44,11 +45,28 @@ class SeedHandler(webapp2.RequestHandler):
     def get(self):
         seed_webs()
 
+
+class CommentHandler(webapp2.RequestHandler):
+    def get(self):
+        start_template=jinja_current_directory.get_template("templates/comments.html")
+        self.response.write(start_template.render())
+    def post(self):
+        sent_feeling = self.request.get("sent_feeling")
+        # get url and feeling from datastore and post
+        sf_keys = URL_lib.query().filter(ndb.StringProperty("feeling") == sent_feeling).fetch()
+        #print(sent_url)
+        chosen_website = random.choice(sf_keys)
+        print(chosen_website.url)
+    #    start_template=jinja_current_directory.get_template(sent_url)
+    #    self.response.write(start_template.render(sent_url))
+        #enrollment_entity_list = Enrollment.query().fetch()
+
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
     ('/home', HomeHandler),
     ('/thanks', ThanksHandler),
-    ('/seed', SeedHandler)
+    ('/seed', SeedHandler),
+    ('/comments', CommentHandler),
 ], debug=True)
 
 #
