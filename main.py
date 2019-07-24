@@ -57,6 +57,10 @@ class CommentHandler(webapp2.RequestHandler):
         #print(sent_url)
         chosen_website = random.choice(sf_keys)
         chosen_website_url = chosen_website.url
+        new_visit_entity = Visit(vist_feeling = sent_feeling,
+                                      visit_url = chosen_website_url,
+                                      date_time = datetime.datetime.now())
+        print (new_visit_entity)
         comment_template = jinja_current_directory.get_template("templates/comments.html")
         self.response.write(comment_template.render(
            {'sent_url' : chosen_website_url}))
