@@ -63,7 +63,7 @@ class CommentTabHandler(webapp2.RequestHandler):
                                       date_time = datetime.datetime.now(),
                                       includes_comment = False)
         new_visit_entity.put()
-        print (new_visit_entity)
+        print (new_visit_entity.date_time)
         comment_template = jinja_current_directory.get_template("templates/comments.html")
         self.response.write(comment_template.render(
            {'sent_url' : chosen_website_url}))
@@ -77,13 +77,14 @@ class HistoryHandler(webapp2.RequestHandler):
         self.response.write(start_template.render())
 
     def post(self):
+        entered_url = self.request.get(new_visit_entity.date_time)
         sent_comment = self.request.get("sent_comment")
-        most_recent_visit = Visit.query().filter(ndb.DateTimeProperty("date_time"))
-        comment_template = jinja_current_directory.get_template("templates/history.html")
+        most_recent_visit = Visit.date_time.query()
+        history_template = jinja_current_directory.get_template("templates/history.html")
 
-        self.response.write(comment_template.render(
-        {'listed_visits': new_visit_entity}
-        ))
+        self.response.write(history_template.render(
+        {'listed_visits': new_visit_entity}))
+        print(listed_visits.date_time)
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
     ('/home', HomeHandler),
