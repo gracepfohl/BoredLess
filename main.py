@@ -56,7 +56,10 @@ class CommentHandler(webapp2.RequestHandler):
         sf_keys = URL_lib.query().filter(ndb.StringProperty("feeling") == sent_feeling).fetch()
         #print(sent_url)
         chosen_website = random.choice(sf_keys)
-        print(chosen_website.url)
+        chosen_website_url = chosen_website.url
+        comment_template = jinja_current_directory.get_template("templates/comments.html")
+        self.response.write(comment_template.render(
+           {'sent_url' : chosen_website_url}))
     #    start_template=jinja_current_directory.get_template(sent_url)
     #    self.response.write(start_template.render(sent_url))
         #enrollment_entity_list = Enrollment.query().fetch()
