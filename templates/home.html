@@ -15,27 +15,31 @@
   limitations under the License.
 -->
 <html>
- <head>
-   <link rel="stylesheet" type="text/css" href="../styles/styles.css">
- </head>
- <body>
-     <div class="pagetitle">
-       <h1>BoredLess</h1>
-<br>
-      <h1>HOME PAGE</h1>
-     <h1>Choose a feeling: </h1>
-     <form method="post" action="/">
-       <h3>Select a feeling: </h3>
-        <select>
-          <option value="Weird">Weird</option>
-          <option value="Social">Social</option>
-          <option value="Creative">Creative</option>
-          <option value="Intuitive">Intuitive</option>
 
-        </select>
+<head>
+  <link rel="stylesheet" type="text/css" href="../styles/styles.css">
+</head>
 
-       <input type="submit" value="Go to Website">
-     </form>
-     <a href="/">Return</a>
- </body>
+<body>
+  <div class="pagetitle">
+    <h1>BoredLess</h1>
+    <br>
+    <h1>HOME PAGE</h1>
+    <h1>Choose a feeling: </h1>
+    <form method="post" action="/home">
+      <h3>Select a feeling: </h3>
+      <select name="sent_feeling">
+        <option value="weird">weird</option>
+        <option value="social">social</option>
+        <option value="creative">creative</option>
+        <option value="intuitive">intuitive</option>
+
+      </select>
+
+      <!-- <input type="submit" value="Go to Website"> -->
+      <input onClick="window.location.href='{{sent_url}}'" type="submit" Value="Go">
+    </form>
+    <a href="/">Return</a>
+</body>
+
 </html>

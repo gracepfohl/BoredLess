@@ -19,8 +19,15 @@ class HomeHandler(webapp2.RequestHandler):
     def get(self):
         start_template=jinja_current_directory.get_template("templates/home.html")
         self.response.write(start_template.render())
-        def post(self):
-            pass # add a post message here
+    def post(self):
+        sent_feeling = self.request.get("sent_feeling")
+        sent_URL_lib_entity = URL_lib(feeling = sent_feeling)
+        # get url and feeling from datastore and post
+        sent_url = URL_lib.query().filter(sent_feeling).fetch()
+        print(sent_url)
+    #    start_template=jinja_current_directory.get_template(sent_url)
+    #    self.response.write(start_template.render(sent_url))
+        #enrollment_entity_list = Enrollment.query().fetch()
 class ThanksHandler(webapp2.RequestHandler):
     def get(self):
         entered_url = self.request.get("entered_url")
