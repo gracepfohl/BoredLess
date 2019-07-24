@@ -11,6 +11,9 @@ class Visit(ndb.Model):
     visit_comment = ndb.StringProperty(required=False)
     date_time = ndb.DateTimeProperty(required=True)
     #user = ndb.KeyPropery(required=False)
+    includes_comment = ndb.BooleanProperty(False, required=True)
+
+
 
 class History(ndb.Model):
     user_visit = ndb.KeyProperty(Visit, repeated=True)  # contains multiple
