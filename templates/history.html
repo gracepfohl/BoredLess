@@ -27,12 +27,13 @@
         <h2>{{each_visit.visit_feeling}}</h2>
         <h3>{{each_visit.visit_url}}</h3>
         <p>{{ each_visit.date_time}}</p>
+        {% endfor %}
         <!-- <ul>
         {% for each_enrollment in enrollment_info %}
           {% if each_enrollment.student == each_student.key %}
             <li>{{ each_enrollment.course.get().name }}</li>
           {% endif %}
-        -->{% endfor %}<!--
+        {% endfor %}
         </ul> -->
 </body>
 
