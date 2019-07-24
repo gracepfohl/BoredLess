@@ -47,7 +47,7 @@ class SeedHandler(webapp2.RequestHandler):
         seed_webs()
 
 
-class CommentHandler(webapp2.RequestHandler):
+class CommentTabHandler(webapp2.RequestHandler):
     def get(self):
         start_template=jinja_current_directory.get_template("templates/comments.html")
         self.response.write(start_template.render())
@@ -60,7 +60,8 @@ class CommentHandler(webapp2.RequestHandler):
         chosen_website_url = chosen_website.url
         new_visit_entity = Visit(visit_feeling = sent_feeling,
                                       visit_url = chosen_website_url,
-                                      date_time = datetime.datetime.now())
+                                      date_time = datetime.datetime.now(),
+                                      includes_comment = False)
         new_visit_entity.put()
         print (new_visit_entity)
         comment_template = jinja_current_directory.get_template("templates/comments.html")
@@ -70,12 +71,26 @@ class CommentHandler(webapp2.RequestHandler):
     #    self.response.write(start_template.render(sent_url))
         #enrollment_entity_list = Enrollment.query().fetch()
 
+class HistoryHandler(webapp2.RequestHandler):
+    def get(self):
+        start_template=jinja_current_directory.get_template("templates/history.html")
+        self.response.write(start_template.render())
+
+    def post(self):
+        sent_comment = self.request.get("sent_comment")
+        most_recent_visit = Visit.query().filter(ndb.DateTimeProperty("date_time"))
+        comment_template = jinja_current_directory.get_template("templates/history.html")
+
+        self.response.write(comment_template.render(
+        {'listed_visits': new_visit_entity}
+        ))
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
     ('/home', HomeHandler),
     ('/thanks', ThanksHandler),
     ('/seed', SeedHandler),
-    ('/comments', CommentHandler),
+    ('/comments', CommentTabHandler),
+    ('/history', HistoryHandler),
 ], debug=True)
 
 #
