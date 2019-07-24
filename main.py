@@ -5,6 +5,7 @@ import random
 from boredless_models import URL_lib, Visit, History
 from seed_data import seed_webs
 from google.appengine.ext import ndb
+import datetime
 
 jinja_current_directory = jinja2.Environment(
     loader=jinja2.FileSystemLoader(os.path.dirname(__file__)),
@@ -57,7 +58,7 @@ class CommentHandler(webapp2.RequestHandler):
         #print(sent_url)
         chosen_website = random.choice(sf_keys)
         chosen_website_url = chosen_website.url
-        new_visit_entity = Visit(vist_feeling = sent_feeling,
+        new_visit_entity = Visit(visit_feeling = sent_feeling,
                                       visit_url = chosen_website_url,
                                       date_time = datetime.datetime.now())
         print (new_visit_entity)
