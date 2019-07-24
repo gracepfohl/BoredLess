@@ -5,9 +5,10 @@ class URL_lib(ndb.Model):
     url = ndb.StringProperty(required=True)
 
 class Visit(ndb.Model):
-    url_and_feeling = ndb.KeyProperty(URL_lib)  # contains url
-    comment = ndb.StringProperty(required=False)
+    visit_url = ndb.KeyProperty(URL_lib)  # contains url
+    visit_comment = ndb.StringProperty(required=False)
     date_time = ndb.DateTimeProperty(required=True)
+    user = ndb.KeyPropery(required=False)
 
 class History(ndb.Model):
     user_visit = ndb.KeyProperty(Visit, repeated=True)  # contains multiple
