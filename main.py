@@ -61,6 +61,7 @@ class CommentHandler(webapp2.RequestHandler):
         new_visit_entity = Visit(visit_feeling = sent_feeling,
                                       visit_url = chosen_website_url,
                                       date_time = datetime.datetime.now())
+        new_visit_entity.put()
         print (new_visit_entity)
         comment_template = jinja_current_directory.get_template("templates/comments.html")
         self.response.write(comment_template.render(
