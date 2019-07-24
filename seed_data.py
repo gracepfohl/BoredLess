@@ -18,7 +18,6 @@ def seed_webs():
     social3 = URL_lib(feeling="social", url="https://twitter.com/?lang=en")
     creative3 = URL_lib(feeling="creative", url="http://ninjaflex.com/")
 
-
     weird1.put()
     weird2.put()
     weird3.put()
