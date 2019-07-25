@@ -80,7 +80,7 @@ class NewCommentHandler(webapp2.RequestHandler):
         visit_date_time = self.request.get(new_visit_entity.date_time)
 
     def post(self):
-        history_template = jinja_current_directory.get_template("templates/history.html")
+        new_comment_template = jinja_current_directory.get_template("templates/new_comment.html")
         new_visit_entity = self.request.get('new_visit_entity')
         visit_id= self.request.get("visit_id")
         visit_entity = Visit.get_by_id(int(visit_id))
@@ -93,6 +93,9 @@ class NewCommentHandler(webapp2.RequestHandler):
         visit_entity.put()
         print(self.request.get('sent_comment'))
         print(visit_entity)
+        new_comment_template = jinja_current_directory.get_template("templates/new_comment.html")
+        self.response.write(new_comment_template.render())
+
         #new_visit_entity["visit_comment"] = self.request.get('sent_comment')
 
 
@@ -103,7 +106,7 @@ class NewCommentHandler(webapp2.RequestHandler):
 
 class HistoryHandler(webapp2.RequestHandler):
     def get(self):
-        history_template=jinja_current_directory.get_template("templates/Main.html")
+        history_template=jinja_current_directory.get_template("templates/history.html")
         self.response.write(history_template.render())
     def post(self):
         pass
@@ -114,7 +117,7 @@ app = webapp2.WSGIApplication([
     ('/thanks', ThanksHandler),
     ('/seed', SeedHandler),
     ('/comments', CommentTabHandler),
-    ('/new_comment)', NewCommentHandler),
+    ('/new_comment', NewCommentHandler),
 ], debug=True)
 
 
