@@ -109,7 +109,11 @@ class HistoryHandler(webapp2.RequestHandler):
         visit_entity_list = Visit.query().order(Visit.date_time).fetch()
         #print(visit_entity_list)
         history_template=jinja_current_directory.get_template("templates/history.html")
-        self.response.write(history_template.render())
+        self.response.write(history_template.render(
+        {"visit_info": visit_entity_list
+
+        }
+        ))
 
 
 app = webapp2.WSGIApplication([
