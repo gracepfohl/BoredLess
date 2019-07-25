@@ -73,7 +73,7 @@ class CommentTabHandler(webapp2.RequestHandler):
     #    self.response.write(start_template.render(sent_url))
         #enrollment_entity_list = Enrollment.query().fetch()
 
-class HistoryHandler(webapp2.RequestHandler):
+class NewCommentHandler(webapp2.RequestHandler):
     def get(self):
         comment_text = self.request.get('sent_comment')
         self.response.write(start_template.render())
@@ -105,7 +105,7 @@ app = webapp2.WSGIApplication([
     ('/thanks', ThanksHandler),
     ('/seed', SeedHandler),
     ('/comments', CommentTabHandler),
-    ('/history', HistoryHandler),
+    ('/new_comment)', NewCommentHandler),
 ], debug=True)
 
 #
