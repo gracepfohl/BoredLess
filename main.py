@@ -63,11 +63,12 @@ class CommentTabHandler(webapp2.RequestHandler):
                                       date_time = datetime.datetime.now(),
                                       includes_comment = False,
                                       visit_comment = " ")
-        new_visit_entity.put()
+        visit_key = new_visit_entity.put()
         print (new_visit_entity.date_time)
         comment_template = jinja_current_directory.get_template("templates/comments.html")
         self.response.write(comment_template.render(
-           {'sent_url' : chosen_website_url}))
+           {'sent_url' : chosen_website_url,
+           'visit_key': visit_key.id()}))
     #    start_template=jinja_current_directory.get_template(sent_url)
     #    self.response.write(start_template.render(sent_url))
         #enrollment_entity_list = Enrollment.query().fetch()
@@ -81,14 +82,23 @@ class HistoryHandler(webapp2.RequestHandler):
     def post(self):
         history_template = jinja_current_directory.get_template("templates/history.html")
         new_visit_entity = self.request.get('new_visit_entity')
+        visit_id= self.request.get("visit_id")
+        visit_entity = Visit.get_by_id(int(visit_id))
+        print(visit_id)
+        print("\n\n")
+
         visit_comment = self.request.get('visit_comment')
+        print(visit_comment)
+        visit_entity.visit_comment = self.request.get('sent_comment')
+        visit_entity.put()
         print(self.request.get('sent_comment'))
+        print(visit_entity)
         #new_visit_entity["visit_comment"] = self.request.get('sent_comment')
 
 
-        self.response.write(history_template.render(
-        {'listed_visits': new_visit_entity}))
-        print(listed_visits.date_time)
+        #self.response.write(history_template.render(
+        #{'listed_visits': new_visit_entity}))
+        #print(listed_visits.date_time)
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
     ('/home', HomeHandler),
