@@ -106,7 +106,7 @@ class NewCommentHandler(webapp2.RequestHandler):
 
 class HistoryHandler(webapp2.RequestHandler):
     def get(self):
-        visit_entity_list = Visit.query().order(Visit.date_time).fetch()
+        visit_entity_list = Visit.query().order(-Visit.date_time).fetch()
         #print(visit_entity_list)
         history_template=jinja_current_directory.get_template("templates/history.html")
         self.response.write(history_template.render(
