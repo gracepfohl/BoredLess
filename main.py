@@ -18,13 +18,6 @@ jinja_current_directory = jinja2.Environment(
 
 class MainHandler(webapp2.RequestHandler):
     def get(self):
-        start_template=jinja_current_directory.get_template("templates/index.html")
-        self.response.write(start_template.render())
-
-
-
-class HomeHandler(webapp2.RequestHandler):
-    def get(self):
         user = users.get_current_user()
         if user:
             signout_link_html = '<a href="%s">sign out</a>' % (users.create_logout_url('/'))
@@ -36,7 +29,7 @@ class HomeHandler(webapp2.RequestHandler):
                 # Registration form for a first-time visitor:
                 self.response.write('''
                     Welcome to our site, %s!  Please sign up! <br>
-                    <form method="post" action="/">
+                    <form method="post" action="/login">
                     <input type="text" name="first_name">
                     <input type="text" name="last_name">
                     <input type="submit">
@@ -49,13 +42,49 @@ class HomeHandler(webapp2.RequestHandler):
           login_html_element = '<a href="%s">Sign in</a>' % login_url
           self.response.write('Please log in.<br>' + login_html_element)
 
+        start_template=jinja_current_directory.get_template("templates/index.html")
+        self.response.write(start_template.render())
+
+
+class HomeHandler(webapp2.RequestHandler):
+    def get(self):
         start_template=jinja_current_directory.get_template("templates/home.html")
         self.response.write(start_template.render())
+        # user = users.get_current_user()
+        # if user:
+        #     signout_link_html = '<a href="%s">sign out</a>' % (users.create_logout_url('/'))
+        #     email_address = user.nickname()
+        #     cssi_user = SiteUser.query().filter(SiteUser.email == email_address).get()
+        #     if cssi_user:
+        #         self.response.write("Looks like you're registered. Thanks for using our site!")
+        #     else:
+        #         # Registration form for a first-time visitor:
+        #         self.response.write('''
+        #             Welcome to our site, %s!  Please sign up! <br>
+        #             <form method="post" action="/">
+        #             <input type="text" name="first_name">
+        #             <input type="text" name="last_name">
+        #             <input type="submit">
+        #             </form><br> %s <br>
+        #             ''' % (email_address, signout_link_html))
+        #
+        # else:
+        #   # If the user isn't logged in...
+        #   login_url = users.create_login_url('/')
+        #   login_html_element = '<a href="%s">Sign in</a>' % login_url
+        #   self.response.write('Please log in.<br>' + login_html_element)
+        #
+        # start_template=jinja_current_directory.get_template("templates/home.html")
+        # self.response.write(start_template.render())
     def post(self):
         sent_feeling = self.request.get("sent_feeling")
         sent_URL_lib_entity = URL_lib(feeling = sent_feeling)
         sent_url = URL_lib.query().filter(sent_feeling).fetch()
         print(sent_url)
+
+
+class LoginHandler(webapp2.RequestHandler):
+    def post(self):
         user = users.get_current_user()
         cssi_user = SiteUser(
             first_name=self.request.get('first_name'),
@@ -161,6 +190,7 @@ app = webapp2.WSGIApplication([
     ('/seed', SeedHandler),
     ('/comments', CommentTabHandler),
     ('/new_comment', NewCommentHandler),
+    ('/login', LoginHandler),
     ('/history', HistoryHandler)
 ], debug=True)
 

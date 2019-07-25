@@ -28,8 +28,9 @@
   <h3>Website: {{each_visit.visit_url}}</h3>
   <p>Date Time: {{ each_visit.date_time.strftime('%H:%M on %Y-%m-%d ')}}</p>
   <p>Comment: {{ each_visit.visit_comment}}</p>
-  <p>User: {{ each_visit.visit_user}}</p>
+
   {% endfor %}
+  <a href="/home">Go home</a>
 </body>
 
 </html>
