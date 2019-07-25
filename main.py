@@ -61,7 +61,8 @@ class CommentTabHandler(webapp2.RequestHandler):
         new_visit_entity = Visit(visit_feeling = sent_feeling,
                                       visit_url = chosen_website_url,
                                       date_time = datetime.datetime.now(),
-                                      includes_comment = False)
+                                      includes_comment = False,
+                                      visit_comment = " ")
         new_visit_entity.put()
         print (new_visit_entity.date_time)
         comment_template = jinja_current_directory.get_template("templates/comments.html")
@@ -73,14 +74,17 @@ class CommentTabHandler(webapp2.RequestHandler):
 
 class HistoryHandler(webapp2.RequestHandler):
     def get(self):
-        start_template=jinja_current_directory.get_template("templates/history.html")
+        comment_text = self.request.get('sent_comment')
         self.response.write(start_template.render())
+        visit_date_time = self.request.get(new_visit_entity.date_time)
 
     def post(self):
-        entered_url = self.request.get(new_visit_entity.date_time)
-        sent_comment = self.request.get("sent_comment")
-        most_recent_visit = Visit.date_time.query()
         history_template = jinja_current_directory.get_template("templates/history.html")
+        new_visit_entity = self.request.get('new_visit_entity')
+        visit_comment = self.request.get('visit_comment')
+        print(self.request.get('sent_comment'))
+        #new_visit_entity["visit_comment"] = self.request.get('sent_comment')
+
 
         self.response.write(history_template.render(
         {'listed_visits': new_visit_entity}))
