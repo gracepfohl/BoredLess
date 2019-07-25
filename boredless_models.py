@@ -17,3 +17,4 @@ class Visit(ndb.Model):
 
 class History(ndb.Model):
     user_visit = ndb.KeyProperty(Visit, repeated=True)  # contains multiple
+#hello
