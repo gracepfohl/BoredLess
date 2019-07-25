@@ -18,34 +18,8 @@ jinja_current_directory = jinja2.Environment(
 
 class MainHandler(webapp2.RequestHandler):
     def get(self):
-        user = users.get_current_user()
-        if user:
-            signout_link_html = '<a href="%s">sign out</a>' % (users.create_logout_url('/'))
-            email_address = user.nickname()
-            cssi_user = SiteUser.query().filter(SiteUser.email == email_address).get()
-            if cssi_user:
-                self.response.write("Looks like you're registered. Thanks for using our site!")
-                start_template=jinja_current_directory.get_template("templates/index.html")
-                self.response.write(start_template.render())
-            else:
-                # Registration form for a first-time visitor:
-                self.response.write('''
-                    Welcome to our site, %s!  Please sign up! <br>
-                    <form method="post" action="/">
-                    <input type="text" name="first_name">
-                    <input type="text" name="last_name">
-                    <input type="submit">
-                    </form><br> %s <br>
-                    ''' % (email_address, signout_link_html))
-                start_template=jinja_current_directory.get_template("templates/index.html")
-                self.response.write(start_template.render())
-        else:
-          # If the user isn't logged in...
-          login_url = users.create_login_url('/')
-          login_html_element = '<a href="%s">Sign in</a>' % login_url
-          self.response.write('Please log in.<br>' + login_html_element)
-          start_template=jinja_current_directory.get_template("templates/index.html")
-          self.response.write(start_template.render())
+        start_template=jinja_current_directory.get_template("templates/index.html")
+        self.response.write(start_template.render())
 
 
 
@@ -73,6 +47,30 @@ class MainHandler(webapp2.RequestHandler):
 
 class HomeHandler(webapp2.RequestHandler):
     def get(self):
+        user = users.get_current_user()
+        if user:
+            signout_link_html = '<a href="%s">sign out</a>' % (users.create_logout_url('/'))
+            email_address = user.nickname()
+            cssi_user = SiteUser.query().filter(SiteUser.email == email_address).get()
+            if cssi_user:
+                self.response.write("Looks like you're registered. Thanks for using our site!")
+            else:
+                # Registration form for a first-time visitor:
+                self.response.write('''
+                    Welcome to our site, %s!  Please sign up! <br>
+                    <form method="post" action="/">
+                    <input type="text" name="first_name">
+                    <input type="text" name="last_name">
+                    <input type="submit">
+                    </form><br> %s <br>
+                    ''' % (email_address, signout_link_html))
+
+        else:
+          # If the user isn't logged in...
+          login_url = users.create_login_url('/')
+          login_html_element = '<a href="%s">Sign in</a>' % login_url
+          self.response.write('Please log in.<br>' + login_html_element)
+
         start_template=jinja_current_directory.get_template("templates/home.html")
         self.response.write(start_template.render())
     def post(self):
@@ -81,6 +79,19 @@ class HomeHandler(webapp2.RequestHandler):
         # get url and feeling from datastore and post
         sent_url = URL_lib.query().filter(sent_feeling).fetch()
         print(sent_url)
+        user = users.get_current_user()
+        # Create a new CSSI user.
+        cssi_user = SiteUser(
+            first_name=self.request.get('first_name'),
+            last_name=self.request.get('last_name'),
+            email=user.nickname())
+            # Store that Entity in Datastore.
+        cssi_user.put()
+    # Show confirmation to the user. Include a link back to the index.
+        self.response.write('Thanks for signing up, %s! <br><a href="/">Home</a>' %
+        cssi_user.first_name)
+        start_template=jinja_current_directory.get_template("templates/home.html")
+        self.response.write(start_template.render())
     #    start_template=jinja_current_directory.get_template(sent_url)
     #    self.response.write(start_template.render(sent_url))
         #enrollment_entity_list = Enrollment.query().fetch()
@@ -112,13 +123,24 @@ class CommentTabHandler(webapp2.RequestHandler):
         #print(sent_url)
         chosen_website = random.choice(sf_keys)
         chosen_website_url = chosen_website.url
+        #cssi_user = SiteUser.query().filter(SiteUser.email == email_address).get()
+        #user_id=self.request.get("SiteUser")
+        #user_key = SiteUser.query().filter(ndb.KeyPropery)
+        #print("\n\n" + user_id)
+        #user_visit = SiteUser.get_by_id(int(user_id))
+        user_from_api = users.get_current_user()
+        user_nickname = user_from_api.nickname()
+        user = SiteUser.query().filter(SiteUser.email == user_nickname).fetch()
+
         new_visit_entity = Visit(visit_feeling = sent_feeling,
                                       visit_url = chosen_website_url,
                                       date_time = datetime.datetime.now(),
                                       includes_comment = False,
-                                      visit_comment = " ")
+                                      visit_comment = " ",
+                                      visit_user = user[0].key)
+
+
         visit_key = new_visit_entity.put()
-        print (new_visit_entity.date_time)
         comment_template = jinja_current_directory.get_template("templates/comments.html")
         self.response.write(comment_template.render(
            {'sent_url' : chosen_website_url,

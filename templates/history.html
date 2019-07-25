@@ -24,10 +24,11 @@
 
   <h1>History</h1>
   {% for each_visit in visit_info %}
-  <h2>{{each_visit.visit_feeling}}</h2>
-  <h3>{{each_visit.visit_url}}</h3>
-  <p>{{ each_visit.date_time}}</p>
-  <p>{{ each_visit.visit_comment}}</p>
+  <h2>Feeling: {{each_visit.visit_feeling}}</h2>
+  <h3>Website: {{each_visit.visit_url}}</h3>
+  <p>Date Time: {{ each_visit.date_time.strftime('%H:%M on %Y-%m-%d ')}}</p>
+  <p>Comment: {{ each_visit.visit_comment}}</p>
+  <p>User: {{ each_visit.visit_user}}</p>
   {% endfor %}
 </body>
 
