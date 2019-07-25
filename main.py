@@ -23,28 +23,6 @@ class MainHandler(webapp2.RequestHandler):
 
 
 
-    # def get(self):
-    #     user = users.get_current_user()
-    #     if user:
-    #         self.response.write("You're logged in!")
-    #         email_address = user.nickname()
-    #     # Generate a sign out link - this does it all in one line.
-    #         logout_link_html = '<a href="%s">sign out</a>' % (
-    #                         users.create_logout_url('/'))
-    #   # Show that sign out link on screen
-    #         self.response.write("You're logged in as " + email_address + "<br>" + logout_link_html)
-    #         start_template=jinja_current_directory.get_template("templates/index.html")
-    #         self.response.write(start_template.render())
-    #     else:
-    #         # This line creates a URL to log in with your Google Credentials.
-    #         login_url = users.create_login_url('/')
-    #         # This line uses string templating to create an anchor (link) element.
-    #         login_html_element = '<a href="%s">Sign in</a>' % login_url
-    #         # This line puts that URL on screen in a clickable anchor elememt.
-    #         self.response.write('Please log in.<b>' + login_html_element)
-            # start_template=jinja_current_directory.get_template("templates/index.html")
-            # self.response.write(start_template.render())
-
 class HomeHandler(webapp2.RequestHandler):
     def get(self):
         user = users.get_current_user()
@@ -76,25 +54,19 @@ class HomeHandler(webapp2.RequestHandler):
     def post(self):
         sent_feeling = self.request.get("sent_feeling")
         sent_URL_lib_entity = URL_lib(feeling = sent_feeling)
-        # get url and feeling from datastore and post
         sent_url = URL_lib.query().filter(sent_feeling).fetch()
         print(sent_url)
         user = users.get_current_user()
-        # Create a new CSSI user.
         cssi_user = SiteUser(
             first_name=self.request.get('first_name'),
             last_name=self.request.get('last_name'),
             email=user.nickname())
-            # Store that Entity in Datastore.
         cssi_user.put()
-    # Show confirmation to the user. Include a link back to the index.
         self.response.write('Thanks for signing up, %s! <br><a href="/">Home</a>' %
         cssi_user.first_name)
         start_template=jinja_current_directory.get_template("templates/home.html")
         self.response.write(start_template.render())
-    #    start_template=jinja_current_directory.get_template(sent_url)
-    #    self.response.write(start_template.render(sent_url))
-        #enrollment_entity_list = Enrollment.query().fetch()
+
 class ThanksHandler(webapp2.RequestHandler):
     def get(self):
         entered_url = self.request.get("entered_url")
@@ -118,16 +90,10 @@ class CommentTabHandler(webapp2.RequestHandler):
         self.response.write(start_template.render())
     def post(self):
         sent_feeling = self.request.get("sent_feeling")
-        # get url and feeling from datastore and post
         sf_keys = URL_lib.query().filter(ndb.StringProperty("feeling") == sent_feeling).fetch()
-        #print(sent_url)
         chosen_website = random.choice(sf_keys)
         chosen_website_url = chosen_website.url
-        #cssi_user = SiteUser.query().filter(SiteUser.email == email_address).get()
-        #user_id=self.request.get("SiteUser")
-        #user_key = SiteUser.query().filter(ndb.KeyPropery)
-        #print("\n\n" + user_id)
-        #user_visit = SiteUser.get_by_id(int(user_id))
+
         user_from_api = users.get_current_user()
         user_nickname = user_from_api.nickname()
         user = SiteUser.query().filter(SiteUser.email == user_nickname).fetch()
@@ -145,9 +111,7 @@ class CommentTabHandler(webapp2.RequestHandler):
         self.response.write(comment_template.render(
            {'sent_url' : chosen_website_url,
            'visit_key': visit_key.id()}))
-    #    start_template=jinja_current_directory.get_template(sent_url)
-    #    self.response.write(start_template.render(sent_url))
-        #enrollment_entity_list = Enrollment.query().fetch()
+
 
 class NewCommentHandler(webapp2.RequestHandler):
     def get(self):
@@ -172,12 +136,6 @@ class NewCommentHandler(webapp2.RequestHandler):
         new_comment_template = jinja_current_directory.get_template("templates/new_comment.html")
         self.response.write(new_comment_template.render())
 
-        #new_visit_entity["visit_comment"] = self.request.get('sent_comment')
-
-
-        #self.response.write(history_template.render(
-        #{'listed_visits': new_visit_entity}))
-        #print(listed_visits.date_time)
 
 
 class HistoryHandler(webapp2.RequestHandler):
