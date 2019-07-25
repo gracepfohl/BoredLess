@@ -1,5 +1,6 @@
+import webapp2
 from google.appengine.ext import ndb
-
+from google.appengine.api import users
 
 class URL_lib(ndb.Model):
     feeling = ndb.StringProperty(required=True)
@@ -13,7 +14,10 @@ class Visit(ndb.Model):
     #user = ndb.KeyPropery(required=False)
     includes_comment = ndb.BooleanProperty(required=True)
 
-
+class SiteUser(ndb.Model):
+  first_name = ndb.StringProperty()
+  last_name = ndb.StringProperty()
+  email = ndb.StringProperty()
 
 class History(ndb.Model):
     user_visit = ndb.KeyProperty(Visit, repeated=True)  # contains multiple
