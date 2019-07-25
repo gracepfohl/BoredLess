@@ -99,6 +99,15 @@ class NewCommentHandler(webapp2.RequestHandler):
         #self.response.write(history_template.render(
         #{'listed_visits': new_visit_entity}))
         #print(listed_visits.date_time)
+
+
+class HistoryHandler(webapp2.RequestHandler):
+    def get(self):
+        history_template=jinja_current_directory.get_template("templates/Main.html")
+        self.response.write(history_template.render())
+    def post(self):
+        pass
+
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
     ('/home', HomeHandler),
@@ -108,8 +117,8 @@ app = webapp2.WSGIApplication([
     ('/new_comment)', NewCommentHandler),
 ], debug=True)
 
-#
-# class MainHandler(webapp2.RequestHandler):
-#     def get(self):
-#         start_template=jinja_current_directory.get_template("templates/Main.html")
-#         self.response.write(start_template.render())
+
+class MainHandler(webapp2.RequestHandler):
+    def get(self):
+        start_template=jinja_current_directory.get_template("templates/Main.html")
+        self.response.write(start_template.render())
