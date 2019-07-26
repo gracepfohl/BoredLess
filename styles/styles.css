@@ -1,5 +1,5 @@
 
-@keyframes bgcolor {
+/* @keyframes bgcolor {
     0% {
         background-color: #45a3e5
     }
@@ -19,24 +19,30 @@
     100% {
         background-color: #864cbf
     }
-}
+} */
 
 body {
-    background-image: url("https://upload.wikimedia.org/wikipedia/commons/1/11/WarpTrails2.gif");
+    background-image: url("../pictures/WarpTrails2.gif");
     background-repeat: no-repeat;
     background-size: 2000px 1000px;
     background-position: center;
-
+    color: white;
 }
 
 
-h1 {
+h1{
   color: white;
   display: inline-block;
 }
 
 img{
-  display: inline-block;
+  display: block;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 30%;
+  border-radius: 20px;
 }
 
 
