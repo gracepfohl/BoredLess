@@ -24,7 +24,12 @@ class MainHandler(webapp2.RequestHandler):
             email_address = user.nickname()
             cssi_user = SiteUser.query().filter(SiteUser.email == email_address).get()
             if cssi_user:
-                self.response.write("Looks like you're registered. Thanks for using our site!")
+                self.response.write('''
+                    Look's like your registered!<br>
+                    <form method="get" action="/history">
+                    <input type="submit" value="History">
+                    </form>
+                    ''')
             else:
                 # Registration form for a first-time visitor:
                 self.response.write('''
