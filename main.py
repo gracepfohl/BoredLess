@@ -173,7 +173,7 @@ class HistoryHandler(webapp2.RequestHandler):
         user_nickname = user_from_api.nickname()
         user_list = SiteUser.query().filter(SiteUser.email == user_nickname).fetch()
         user_key = user_list[0].key
-        visit_entity_list = Visit.query().order(Visit.date_time).filter(Visit.visit_user == user_key).fetch()
+        visit_entity_list = Visit.query().order(-Visit.date_time).filter(Visit.visit_user == user_key).fetch()
         #print(visit_entity_list)
         history_template=jinja_current_directory.get_template("templates/history.html")
         self.response.write(history_template.render(
