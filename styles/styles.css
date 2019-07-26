@@ -22,11 +22,11 @@
 }
 
 body {
-    -webkit-animation: bgcolor 20s infinite;
-    animation: bgcolor 10s infinite;
-    -webkit-animation-direction: alternate;
-    animation-direction: alternate;
-      font-family: "Lato", sans-serif;
+    background-image: url("https://upload.wikimedia.org/wikipedia/commons/1/11/WarpTrails2.gif");
+    background-repeat: no-repeat;
+    background-size: 2000px 1000px;
+    background-position: center;
+
 }
 
 
@@ -36,17 +36,11 @@ h1 {
 }
 
 img{
-  display: block;
-  margin-top: 0px;
-  margin-bottom: 0px;
-  margin-left: auto;
-  margin-right: auto;
-  width: 30%;
-  border-radius: 20px;
-
+  display: inline-block;
 }
 
 
 .main{
-  padding: 0px;
+  border: solid white 2px;
+  padding: 10px;
 }
