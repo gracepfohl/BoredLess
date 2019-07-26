@@ -7,15 +7,24 @@
 </head>
 
 <body>
-
+{% if open_new_window%}
+  <script type="text/javascript">
+    window.open("{{sent_url}}")
+  </script>
+  {% endif %}
   <div class="pagetitle">
     <h1>BoredLess</h1>
     <br>
     <img src="../pictures/cropped_logo.png" alt="BoredLess Logo">
 
-    <h1>Home</h1>
+    <h1>Home       {{user}}</h1>
     <br>
-    <form method="post" action="/comments">
+    {% if post_to_comment %}
+      <form method="post" action="/comments">
+    {% else %}
+
+      <form method="post" action="/home">
+    {% endif %}
       <h3>Select a feeling: </h3>
       <select name="sent_feeling">
         <option value="weird">weird</option>

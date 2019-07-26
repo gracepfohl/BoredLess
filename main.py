@@ -75,45 +75,25 @@ class HomeHandler(webapp2.RequestHandler):
                     <input type="submit">
                     </form><br> %s <br>
                     ''' % (email_address, signout_link_html))
-
+            start_template=jinja_current_directory.get_template("templates/home.html")
+            self.response.write(start_template.render({"open_new_window": False, "post_to_comment":True}))
         else:
           # If the user isn't logged in...
           login_url = users.create_login_url('/home')
           login_html_element = '<a href="%s">Sign in</a>' % login_url
           self.response.write('Please log in.<br>' + login_html_element)
-        start_template=jinja_current_directory.get_template("templates/home.html")
-        self.response.write(start_template.render())
-        # user = users.get_current_user()
-        # if user:
-        #     signout_link_html = '<a href="%s">sign out</a>' % (users.create_logout_url('/'))
-        #     email_address = user.nickname()
-        #     cssi_user = SiteUser.query().filter(SiteUser.email == email_address).get()
-        #     if cssi_user:
-        #         self.response.write("Looks like you're registered. Thanks for using our site!")
-        #     else:
-        #         # Registration form for a first-time visitor:
-        #         self.response.write('''
-        #             Welcome to our site, %s!  Please sign up! <br>
-        #             <form method="post" action="/">
-        #             <input type="text" name="first_name">
-        #             <input type="text" name="last_name">
-        #             <input type="submit">
-        #             </form><br> %s <br>
-        #             ''' % (email_address, signout_link_html))
-        #
-        # else:
-        #   # If the user isn't logged in...
-        #   login_url = users.create_login_url('/')
-        #   login_html_element = '<a href="%s">Sign in</a>' % login_url
-        #   self.response.write('Please log in.<br>' + login_html_element)
-        #
-        # start_template=jinja_current_directory.get_template("templates/home.html")
-        # self.response.write(start_template.render())
+          start_template=jinja_current_directory.get_template("templates/home.html")
+          self.response.write(start_template.render({"open_new_window": False, "post_to_comment":False}))
+
     def post(self):
+
         sent_feeling = self.request.get("sent_feeling")
-        sent_URL_lib_entity = URL_lib(feeling = sent_feeling)
-        sent_url = URL_lib.query().filter(sent_feeling).fetch()
-        print(sent_url)
+        sf_keys = URL_lib.query().filter(ndb.StringProperty("feeling") == sent_feeling).fetch()
+        chosen_website = random.choice(sf_keys)
+        chosen_website_url = chosen_website.url
+        start_template=jinja_current_directory.get_template("templates/home.html")
+        self.response.write(start_template.render({"open_new_window": True,
+        'sent_url' : chosen_website_url,}))
 
 
 class LoginHandler(webapp2.RequestHandler):
