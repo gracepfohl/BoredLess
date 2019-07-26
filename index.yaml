@@ -14,9 +14,3 @@ indexes:
   properties:
   - name: visit_user
   - name: date_time
-
-- kind: Visit
-  properties:
-  - name: visit_user
-  - name: date_time
-    direction: desc
