@@ -26,6 +26,7 @@ body {
     background-repeat: no-repeat;
     background-size: 2000px 1000px;
     background-position: center;
+    background-attachment: scroll;
 
 }
 
