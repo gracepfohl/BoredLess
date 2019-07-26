@@ -11,7 +11,7 @@ def seed_webs():
     weird2 = URL_lib(feeling="weird", url="http://chihuahuaspin.com/")
     intuitive2 = URL_lib(feeling="intuitive", url="http://www.puzzlesite.nl/index_us.html")
     social2 = URL_lib(feeling="social", url="https://www.facebook.com/")
-    creative2 = URL_lib(feeling="creative", url="http://ninjaflex.com/")
+    creative2 = URL_lib(feeling="creative", url="http://apps.amandaghassaei.com/VortexShedding/")
 
     weird3 = URL_lib(feeling="weird", url="https://pointerpointer.com/")
     intuitive3 = URL_lib(feeling="intuitive", url="https://www.riddles.com/brain-teasers")
